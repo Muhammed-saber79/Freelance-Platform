@@ -40,27 +40,35 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // $request->authenticate();
+        /**
+         * This is the original way to apply authentication.
+         */
+        $request->authenticate();
 
+        /**
+         * This is the second way to do the same functionality.
+         * 
+         * $user = User::where('email', '=', $request->post('email'))->first();
 
-        // $user = User::where('email', '=', $request->post('email'))->first();
+         * if( !$user || !Hash::check($request->post('password'), $user->password) ){
+         *      throw ValidationException::withMessages([
+         *          'email' => 'Invalid Credentials...!'
+         *      ]);
+         * }
+         * 
+         * Auth::login($user);
+         */
 
-        // if( !$user || !Hash::check($request->post('password'), $user->password) ){
-        //     throw ValidationException::withMessages([
-        //         'email' => 'Invalid Credentials...!'
-        //     ]);
-        // }
-
-        // Auth::login($user);
-
-
-        Auth::attempt([
-            'email' => $request->post('email'),
-            'password' => $request->post('password'),
-        ]);
-
-
-
+        /**
+         * This is the third way to do the same functionality.
+         * 
+         * Auth::attempt([
+         * 'email' => $request->post('email'),
+         * 'password' => $request->post('password'),
+         * ]);
+         * 
+         */
+        
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);

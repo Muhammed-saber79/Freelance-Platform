@@ -11,7 +11,7 @@ edit user
 @section('content')
 <x-flash-message />
 
-<form action="{{ route('users.update', $user->id) }}" method='POST' class='my-3'>
+<form action="{{ route('dashboard.users.update', $user->id) }}" method='POST' class='my-3'>
     @csrf
     @method('PUT')
     @include('users._form')

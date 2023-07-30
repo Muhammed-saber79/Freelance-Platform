@@ -11,7 +11,7 @@ create user
 @section('content')
 <x-flash-message />
 
-<form action="{{ route('users.store') }}" method='POST' class='my-3'>
+<form action="{{ route('dashboard.users.store') }}" method='POST' class='my-3'>
     @csrf
     @include('users._form')
     <button type="submit" class='btn btn-outline-primary' [disabled]="!form.form.valid">

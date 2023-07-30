@@ -62,7 +62,7 @@ class CategoriesController extends Controller
         Category::create( $request->all() );
 
         return redirect()
-            ->route('categories.index')
+            ->route('dashboard.categories.index')
             ->with('success', 'Category created successfully.');
     }
 
@@ -103,7 +103,7 @@ class CategoriesController extends Controller
         $category->save();
 
         return redirect()
-            ->route('categories.index')
+            ->route('dashboard.categories.index')
             ->with('success', 'Category updated successfully.');
     }
 
@@ -114,7 +114,7 @@ class CategoriesController extends Controller
     {
         Category::destroy($id);
         return redirect()
-            ->route('categories.index')
+            ->route('dashboard.categories.index')
             ->with('danger', 'Category deleted successfully.');
     }
 

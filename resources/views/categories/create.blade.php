@@ -12,7 +12,7 @@ Category Create
 <div class="container">
     <x-flash-message />
 
-    <form action="{{ route('categories.store') }}" method="POST">
+    <form action="{{ route('dashboard.categories.store') }}" method="POST">
         @csrf    
         @include('categories._form')
         <button class="btn btn-outline-primary">Create</button>

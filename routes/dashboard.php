@@ -18,6 +18,7 @@ use App\Http\Controllers\UsersController;
 Route::group([
     'prefix' => '/dashboard',
     'middleware' => ['auth'],
+    'as' => 'dashboard.'
 ], function () {
     // Dashboard Index...
     Route::get('/', [UsersController::class, 'index'])->name('index');

@@ -13,10 +13,10 @@ Categories List
     <x-flash-message />
 
     <div class="row my-3">
-        <a href="{{ route('categories.create') }}" class="mx-1">
+        <a href="{{ route('dashboard.categories.create') }}" class="mx-1">
             <button class="btn btn-outline-primary">Add New Category</button>
         </a>
-        <a href="{{ route('index') }}" class="mx-1">
+        <a href="{{ route('dashboard.index') }}" class="mx-1">
             <button class="btn btn-outline-info">Back To Users</button>
         </a>
     </div>
@@ -44,14 +44,14 @@ Categories List
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->parent }}</td>
                     <td class="d-flex flex-row justify-content-center">
-                        <a href="{{ route('categories.show', $row->id) }}" class="mx-1"> 
+                        <a href="{{ route('dashboard.categories.show', $row->id) }}" class="mx-1"> 
                             <button class="btn btn-outline-info">Details</button>
                         </a>
-                        <a href="{{ route('categories.edit', $row->id) }}" class="mx-1"> 
+                        <a href="{{ route('dashboard.categories.edit', $row->id) }}" class="mx-1"> 
                             <button class="btn btn-outline-success">Edit</button>
                         </a>
                 
-                        <form action="{{ route('categories.destroy', $row->id) }}" method="POST" class="mx-1">
+                        <form action="{{ route('dashboard.categories.destroy', $row->id) }}" method="POST" class="mx-1">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-outline-danger">Delete</button>

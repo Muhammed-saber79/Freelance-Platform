@@ -51,7 +51,7 @@ class UsersController extends Controller
         $user->password = $clean['password'];
         $user->save();
 
-        return redirect()->route('index')->with('success', 'user added successfully.');
+        return redirect()->route('dashboard.index')->with('success', 'user added successfully.');
     }
 
     /**
@@ -91,7 +91,7 @@ class UsersController extends Controller
         $user->password = $clean['password'];
         $user->save();
 
-        return redirect()->route('index')->with('info', 'user updated successfully.');
+        return redirect()->route('dashboard.index')->with('info', 'user updated successfully.');
     }
 
     /**
@@ -100,7 +100,7 @@ class UsersController extends Controller
     public function destroy($id){
         $user = User::findOrFail($id);
         User::destroy($id);
-        return redirect()->route('index')->with('danger', 'user removed successfully.');
+        return redirect()->route('dashboard.index')->with('danger', 'user removed successfully.');
     }
 
     /**

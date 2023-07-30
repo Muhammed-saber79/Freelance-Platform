@@ -12,7 +12,7 @@ Category Edit
 <div class="container">
     <x-flash-message />
 
-    <form action="{{ route('categories.update', $category->id) }}" method="POST">
+    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="POST">
         @csrf    
         @method('PUT')
         @include('categories._form')

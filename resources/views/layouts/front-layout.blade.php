@@ -1,5 +1,3 @@
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 <!doctype html>
 <html>
 <head>
@@ -170,7 +168,7 @@ use Illuminate\Support\Facades\Lang;
                                     </div>
 
                                     <ul class="user-menu-small-nav">
-                                        <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
+                                        <li><a href="{{ route('dashboard.index') }}"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
                                         <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
                                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit();"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
                                     </ul>
@@ -205,7 +203,9 @@ use Illuminate\Support\Facades\Lang;
         <div class="clearfix"></div>
         <!-- Header Container / End -->
 
-        {{ $slot }}
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            {{ $slot }}
+        </div>
 
         <!-- Footer -->
         <div id="footer">

@@ -17,10 +17,10 @@ Users List
     <x-flash-message />
 
     <div class="row my-3">
-        <a href="{{ route('users.add') }}" class="mx-1">
+        <a href="{{ route('dashboard.users.add') }}" class="mx-1">
             <button class="btn btn-outline-primary">Add New User</button>
         </a>
-        <a href="{{ route('categories.index') }}" class="mx-1">
+        <a href="{{ route('dashboard.categories.index') }}" class="mx-1">
             <button class="btn btn-outline-info">Go To Categories</button>
         </a>
     </div>
@@ -48,13 +48,13 @@ Users List
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->email }}</td>
                     <td class="text-center">
-                        <a href="{{ route('users.details', $row->id) }}"> 
+                        <a href="{{ route('dashboard.users.details', $row->id) }}"> 
                             <button class="btn btn-outline-info">Details</button>
                         </a>
-                        <a href="{{ route('users.edit', $row->id) }}"> 
+                        <a href="{{ route('dashboard.users.edit', $row->id) }}"> 
                             <button class="btn btn-outline-success">Edit</button>
                         </a>
-                        <a href="{{ route('users.delete', $row->id) }}"> 
+                        <a href="{{ route('dashboard.users.delete', $row->id) }}"> 
                             <button class="btn btn-outline-danger">Delete</button>
                         </a>
                     </td>
