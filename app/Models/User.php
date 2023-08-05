@@ -42,4 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * This is one to one relationship with Freelancer model.
+     */
+    public function freelancer() {
+        return $this->hasOne(Freelancer::class, 'user_id', 'id');
+    }
 }

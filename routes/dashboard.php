@@ -41,4 +41,8 @@ Route::group([
         Route::get('/user/details/{user}', [UsersController::class, 'show'])->name('details');
         Route::get('/user/delete/{id}', [UsersController::class, 'destroy'])->name('delete');
     });
+
+    Route::get('profile', function () {
+        return 'Secret Profile Page...!';
+    })->middleware('password.confirm');
 });
