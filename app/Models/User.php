@@ -50,4 +50,11 @@ class User extends Authenticatable
         return $this->hasOne(Freelancer::class, 'user_id', 'id')
             ->withDefault();
     }
+
+    /**
+     * This is one to many relationship with Project model.
+     */
+    public function projects() {
+        return $this->hasMany(Project::class, 'user_id', 'id');
+    }
 }

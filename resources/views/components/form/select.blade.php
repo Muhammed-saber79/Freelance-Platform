@@ -7,7 +7,7 @@
 ])
 
 <div class="mb-3">
-    <label for="" class="form-label">{{ $label }}</label>
+    @if(isset($label)) <label for="" class="form-label">{{ $label }}</label> @endif
     <select name="{{ $name }}" class="form-control @error($name) is-invalid @enderror">
         <option value="">No Selection</option>
         @foreach ($options as $key => $value)

@@ -241,9 +241,9 @@
 						<ul data-submenu-title="Organize and Manage">
 							<li><a href="#"><i class="icon-material-outline-business-center"></i> Jobs</a>
 								<ul>
-									<li><a href="dashboard-manage-jobs.html">Manage Jobs <span class="nav-tag">3</span></a></li>
+									<li><a href="{{ route('client.projects.index') }}">Manage Jobs <span class="nav-tag">3</span></a></li>
 									<li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>
-									<li><a href="dashboard-post-a-job.html">Post a Job</a></li>
+									<li><a href="{{ route('client.projects.create') }}">Post a Job</a></li>
 								</ul>	
 							</li>
 							<li><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>
