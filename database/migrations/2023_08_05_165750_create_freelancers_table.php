@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('profile_image_path')->nullable();
             $table->string('title')->nullable();
-            $table->string('country');
+            $table->string('country')->nullable();
             $table->boolean('verified')->default(0);
             $table->text('description')->nullable();
             $table->unsignedFloat('hourly_rate')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->timestamps();
             $table->foreignId('user_id')
                 ->primary()

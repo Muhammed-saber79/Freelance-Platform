@@ -47,6 +47,7 @@ class User extends Authenticatable
      * This is one to one relationship with Freelancer model.
      */
     public function freelancer() {
-        return $this->hasOne(Freelancer::class, 'user_id', 'id');
+        return $this->hasOne(Freelancer::class, 'user_id', 'id')
+            ->withDefault();
     }
 }
