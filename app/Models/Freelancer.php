@@ -33,4 +33,8 @@ class Freelancer extends Model
         'gender',
         'birthday',
     ];
+
+    protected $casts = [
+        'birthday' => 'date'
+    ];
 }

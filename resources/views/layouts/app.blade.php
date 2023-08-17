@@ -160,7 +160,7 @@
 
 								<!-- User Name / Avatar -->
 								<div class="user-details">
-									<div class="user-avatar status-online"><img src="images/user-avatar-small-01.jpg" alt=""></div>
+									<div class="user-avatar status-online"><img src="{{ Auth::user()->profile_photo_url }}" alt=""></div>
 									<div class="user-name">
 										{{ Auth::user()->name }} <span>Freelancer</span>
 									</div>
@@ -178,7 +178,17 @@
 						<ul class="user-menu-small-nav">
 							<li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
 							<li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
-							<li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+							<li>
+								<a href="" onclick="event.preventDefault(); document.getElementById('logout').submit();">
+									<i class="icon-material-outline-power-settings-new"></i> Logout
+								</a>
+							</li>
+							
+							<div style="display: none;">
+								<form action="{{ route('logout') }}" method="POST" id='logout'>
+									@csrf
+								</form>
+							</div>
 						</ul>
 
 						</div>

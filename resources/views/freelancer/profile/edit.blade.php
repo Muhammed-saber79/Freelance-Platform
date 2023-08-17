@@ -24,7 +24,7 @@
                         <!-- Avatar Filed -->
                         <div class="col-auto">
                             <div class="avatar-wrapper" data-tippy-placement="bottom" title="Change Avatar">
-                                <img class="profile-pic" src="{! asset('storage/' . $profile->profile_image_path) !}" alt="" />
+                                <img class="profile-pic" src="{{ Auth::user()->profile_photo_url }}" alt="" />
                                 <div class="upload-button"></div>
                                 <input name="profile_photo" class="file-upload" type="file" accept="image/*" />
                             </div>

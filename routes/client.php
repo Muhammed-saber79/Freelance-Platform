@@ -5,7 +5,8 @@ use App\Http\Controllers\Client\ProjectController;
 
 Route::group([
     'prefix' => 'client',
-    'as' => 'client.'
+    'as' => 'client.',
+    'middleware' => ['auth']
 ], function () {
     Route::resource('projects', ProjectController::class)
     // if i want to customize routes names:

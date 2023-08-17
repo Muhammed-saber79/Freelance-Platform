@@ -15,6 +15,6 @@
     {{ $value == '' ? old($field) : $value }}
     </textarea>
     @error($field)
-        <small id="helpId" class="form-text text-danger">{{ $message }}</small>
+        <small id="helpId" class="form-text danger">{{ $message }}</small>
     @enderror
 </div>

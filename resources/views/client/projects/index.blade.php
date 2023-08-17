@@ -5,7 +5,13 @@
         <!-- Dashboard Box -->
         <div class="col-xl-12">
             <div class="dashboard-box margin-top-0">
+                <x-flash-message />
 
+                @if (Session::has('error'))
+                    <h5 class="text-danger">
+                        {{ Session::get('error') }}
+                    </h5>
+                @endif
                 <!-- Headline -->
                 <div class="headline">
                     <h3><i class="icon-material-outline-business-center"></i> My Job Listings
@@ -30,9 +36,20 @@
                                         <div class="job-listing-footer">
                                             <ul>
                                                 <li><i class="icon-material-outline-date-range"></i> Posted on {{ $project->created_at }}</li>
-                                                <li><i class="icon-material-outline-bookmarks"></i> Category: {{ $project->category->parent->name }} / {{ $project->category->name }}</li>
-                                                <li><i class="icon-material-outline-bookmarks"></i>  Tags:
-                                                    
+                                                
+                                                @if ($project->category)
+                                                    <li>
+                                                        <i class="icon-material-outline-bookmarks"></i>
+                                                        Category: {{ $project->category->parent ? $project->category->parent->name . ' / ' : 'No Category' }}
+                                                                {{ $project->category->name }}
+                                                    </li>
+                                                @endif
+
+                                                <li><i class="icon-material-outline-bookmarks"></i>  
+                                                    Tags: 
+                                                    @foreach ($project->tags as $tag)
+                                                        <span style="color:cornflowerblue;">#{{ $tag->name }}</span>
+                                                    @endforeach
                                                 </li>
                                             </ul>
                                         </div>
@@ -45,12 +62,25 @@
                             <div class="buttons-to-right always-visible">
                                 <a href="dashboard-manage-candidates.html" class="button ripple-effect"><i class="icon-material-outline-supervisor-account"></i> Manage Candidates <span class="button-info">3</span></a>
                                 <a href="{{ route('client.projects.edit', $project->id) }}" class="button gray ripple-effect ico" title="Edit" data-tippy-placement="top"><i class="icon-feather-edit"></i></a>
-                                <a href="#" class="button gray ripple-effect ico" title="Remove" data-tippy-placement="top"><i class="icon-feather-trash-2"></i></a>
+                                <a 
+                                    class="button gray ripple-effect ico" 
+                                    title="Remove" 
+                                    data-tippy-placement="top"
+                                    onClick="if(confirm('Are you sure you want to delete this project?')) {
+                                            document.getElementById('delete-project').submit()
+                                    }">
+                                    <i class="icon-feather-trash-2"></i>
+                                </a>
+                                <form id='delete-project' action="{{ route('client.projects.destroy', $project->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             </div>
                         </li>
                         @endforeach
                     </ul>
                 </div>
+                {{ $projects->withQueryString()->links('vendor.pagination.default') }}
             </div>
         </div>
 

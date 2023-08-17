@@ -15063,6 +15063,14 @@ ul.dashboard-box-list > li:hover {
 		.content-right-offset { padding-right: 15px; }
 	}
 
+	.is-invalid {
+		border-color: red;
+	}
+
+	.danger{
+		color: red;
+	}
+
 	/* Margin Top */
 	.margin-top-0   { margin-top: 0px  !important; }
 	.margin-top-1   { margin-top: 1px  !important; }

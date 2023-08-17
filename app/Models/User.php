@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -56,5 +57,27 @@ class User extends Authenticatable
      */
     public function projects() {
         return $this->hasMany(Project::class, 'user_id', 'id');
+    }
+
+    /**
+     * This is the first 'Accessor'
+     * we can call it a 'getter' for image attribute
+     * and because it is a getter it must return a value
+     */
+    public function getProfilePhotoUrlAttribute () {
+        if ($this->freelancer->profile_image_path) {
+            return asset('storage/' . $this->freelancer->profile_image_path);
+        }
+
+        return asset('images/default.png');
+    }
+
+    /**
+     * This is the first 'Mutator'
+     * we can call it a 'setter' for email attribute
+     * and because it is a setter it doesn't return any value but, it changes a local attribute
+     */
+    public function setEmailAttribute ($value) {
+        $this->attributes['email'] = Str::lower($value);
     }
 }

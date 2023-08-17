@@ -74,11 +74,50 @@
                                 <label class="uploadButton-button ripple-effect" for="upload">Upload Files</label>
                                 <span class="uploadButton-file-name">Images or documents that might be helpful in describing your job</span>
                             </div>
+
+                            <div id="imagePreview" class="margin-top-20">
+                                <!-- <img  src="" alt=""> -->
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    let uploadInput = document.getElementById('upload');
+                                    const imagePreview = document.getElementById('imagePreview');
+
+                                    uploadInput.addEventListener('change', function () {
+                                        const files = event.target.files;
+                                        imagePreview.innerHTML = '';
+
+                                        for (const file in files) {
+                                            // Check if the file is an image
+                                            if (files[file] && files[file].type.startsWith('image/')) {
+                                                const reader = new FileReader();
+
+                                                reader.onload = function (e) {
+                                                    const img = document.createElement('img');
+                                                    img.src = e.target.result;
+                                                    img.width = 200;
+                                                    img.style = 'margin: 10px 30px'
+                                                    imagePreview.appendChild(img);
+                                                };
+
+                                                reader.readAsDataURL(files[file]);
+                                            }
+                                        }
+                                    })
+                                })
+                            </script>
+
                             @if (is_array($project->attachments))
                             <div>
-                                <ul>
+                                <ul class="d-flex flex-row ">
                                     @foreach ($project->attachments as $file)
-                                    <li><a href="{{ asset('uploads/' . $file) }}">{{ basename($file) }}</a></li>
+                                    <!-- <li><a href="{{ asset('storage/' . $file) }}">{{ basename($file) }}</a></li> -->
+                                    <li style="list-style: none; margin: 50px">
+                                        <a href="{{ asset('uploads/' . $file) }}">
+                                            <img src="{{ asset('uploads/' . $file) }}" alt="" width="80">
+                                        </a>
+                                    </li>
                                     @endforeach
                                 </ul>
                             </div>
