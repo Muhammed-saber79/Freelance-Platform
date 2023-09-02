@@ -17,7 +17,7 @@ use App\Http\Controllers\UsersController;
 
 Route::group([
     'prefix' => '/dashboard',
-    'middleware' => ['auth'],
+    'middleware' => ['auth:admin'],
     'as' => 'dashboard.'
 ], function () {
     // Dashboard Index...

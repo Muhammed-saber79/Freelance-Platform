@@ -6,7 +6,16 @@
 
         <!-- Trigger -->
         <div class="header-notifications-trigger">
-            <a href="#"><i class="icon-feather-bell"></i><span id="newNotifications">@if( isset($new) ) $new @endif</span></a>
+            <a href="#">
+                <i class="icon-feather-bell"></i>
+                <span id="newNotifications">
+                    @if(isset($new))
+                        <strong>{{ $new }}</strong>
+                    @else
+                        <strong>0</strong>
+                    @endif         
+                </span>
+            </a>
         </div>
 
         <!-- Dropdown -->
@@ -25,14 +34,16 @@
                         @if (isset($notifications)) 
                             @foreach ($notifications as $notification)
                             <!-- Notification -->
-                            <li class="notifications-not-read">
+                            <li class="notifications-not-read" @if($notification->unread()) style="background-color: #C6FAF9" @endif>
                                 <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}">
-                                    <span class="notification-icon"><i class="icon-material-outline-group"></i></span>
+                                    <span class="notification-icon">
+                                        <i class="icon-material-outline-group"></i>
+                                    </span>
                                     <span class="notification-text">
                                         @if($notification->unread())
                                         <strong>*</strong>
                                         @endif
-                                        {{ $notification->data['body'] }}
+                                        {!! $notification->data['body'] !!}
                                     </span>
                                 </a>
                             </li>

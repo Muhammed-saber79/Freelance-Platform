@@ -15,12 +15,21 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
+    protected $guard = 'web';
+    public function __construct (Request $request) {
+        if ($request->is('admin/*')) {
+            $this->guard = 'admin';
+        }
+    }
+
     /**
      * Display the login view.
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'routePrefix' => $this->guard == 'admin' ? 'admin.' : ''
+        ]);
     }
 
     /**
@@ -43,7 +52,7 @@ class AuthenticatedSessionController extends Controller
         /**
          * This is the original way to apply authentication.
          */
-        $request->authenticate();
+        $request->authenticate($this->guard);
 
         /**
          * This is the second way to do the same functionality.
@@ -71,7 +80,7 @@ class AuthenticatedSessionController extends Controller
         
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended( $this->guard == 'admin' ? '/dashboard' : RouteServiceProvider::HOME );
     }
 
     /**
@@ -79,7 +88,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard($this->guard)->logout();
 
         $request->session()->invalidate();
 

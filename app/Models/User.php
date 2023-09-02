@@ -60,6 +60,62 @@ class User extends Authenticatable
     }
 
     /**
+     * This is one to many relationship with Proposal model.
+     * The User model represents as a Freelancer model here.
+     */
+    public function proposals () {
+        return $this->hasMany(Proposal::class, 'freelancer_id', 'id');
+    }
+
+    /**
+     * This is one to many relationship with Proposal model.
+     * The User model represents as a Freelancer model here.
+     */
+    public function contracts () {
+        return $this->hasMany(Contract::class, 'freelancer_id', 'id');
+    }
+
+    /**
+     * This is many to many relationship between users & proejcts on the proposals(pivot table).
+     * We type the current local_id as freelancer_id because we consider the freelancer as user table.
+     */
+    public function proposedProjects () {
+        return $this->belongsToMany(Project::class,
+            'proposals',
+            'freelancer_id',
+            'project_id',
+        )->withPivot([
+            'description',
+            'cost',
+            'duration',
+            'duration_unit',
+            'status',
+        ]);
+    }
+
+    /**
+     * This is many to many relationship between users & projects on contracts(pivot table).
+     * We type the current local_id as freelancer_id because we consider the freelancer as user table.
+     */
+    public function contractedProjects () {
+        return $this->belongsToMany(
+            Project::class,
+            'contracts',
+            'freelancer_id',
+            'project_id'
+        )->withPivot([
+            'proposal_id',
+            'cost',
+            'type',
+            'start_on',
+            'end_on',
+            'completed_on',
+            'hours',
+            'status'
+        ]);
+    }
+
+    /**
      * This is the first 'Accessor'
      * we can call it a 'getter' for image attribute
      * and because it is a getter it must return a value

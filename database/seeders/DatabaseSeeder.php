@@ -23,8 +23,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'cat_1',
         ]);
 
+        $this->call([
+            AdminsTableSeeder::class
+        ]);
+
         \App\Models\User::factory(10)->create();
         \App\Models\Category::factory(10)->create();
         \App\Models\Project::factory(10)->create();
+        \App\Models\Admin::factory(10)->create();
     }
 }

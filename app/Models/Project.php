@@ -25,13 +25,13 @@ class Project extends Model
     ];
 
     protected $casts = [
-        'attachments' => 'json'
+        'attachments' => 'json',
     ];
     
     /**
      * This is one to many relationship belongsTo user model.
      */
-    public function user() {
+    public function client() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
@@ -48,6 +48,49 @@ class Project extends Model
             'id',
             'id'
         );
+    }
+
+    public function proposals () {
+        return $this->hasMany(Proposal::class);
+    }
+
+    public function contract () {
+        return $this->hasMany(Contract::class);
+    }
+
+    public function proposedFreelancers () {
+        return $this->belongsToMany(User::class,
+            'proposals',
+            'project_id',
+            'freelancer_id',
+        )->withPivot([
+            'description',
+            'cost',
+            'duration',
+            'duration_unit',
+            'status',
+        ]);
+    }
+
+    /**
+     * We considered this relation as next:
+     * [projects]---hasMany--->[contracts]---hasMany--->[freelancers(users)]
+     */
+    public function contractedFreelancers () {
+        return $this->belongsToMany(Contract::class,
+            'proposals',
+            'project_id',
+            'freelancer_id',
+        )->withPivot([
+            'proposal_id',
+            'cost',
+            'type',
+            'start_on',
+            'end_on',
+            'completed_on',
+            'hours',
+            'status'
+        ]);
     }
 
     public static function types() {

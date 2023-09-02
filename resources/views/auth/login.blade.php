@@ -1,4 +1,4 @@
-<x-front-layout>
+<x-front-layout title="Login">
 
     <!-- Titlebar -->
     <div id="titlebar" class="gradient">
