@@ -23,7 +23,7 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max: 255'], 
+            'title' => ['required', 'string', 'max: 255'],
             'description' => ['required', 'string'],
             'type' => ['required', 'in:hourly,fixed'],
             'budget' => ['nullable', 'numeric', 'min:0'],
@@ -32,7 +32,8 @@ class ProjectRequest extends FormRequest
 
     public function messages() {
         return [
-            'title.required' => 'The project title is required...!'
+            'title.required' => 'The project title is required...!',
+            'description.required' => 'The project description is required...!'
         ];
     }
 }

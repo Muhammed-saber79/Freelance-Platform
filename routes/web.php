@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
 // ], function () {
 //     require __DIR__.'/auth.php';
 // });
+
+Route::get('/projects', [ProjectsController::class, 'index'])->name('projects.index');
+Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
 
 require __DIR__.'/dashboard.php';
 require __DIR__.'/freelancer.php';

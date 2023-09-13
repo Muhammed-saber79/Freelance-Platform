@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Freelancer;
 
+use App\Models\Admin;
 use App\Models\Project;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Notifications\NewProposalNotification;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class ProposalsController extends Controller
 {
@@ -33,28 +36,11 @@ class ProposalsController extends Controller
     public function create($project_id)
     {
         $project = Project::findOrFail($project_id);
-        if ($project->status !== 'open') {
-            return redirect()
-                ->route('freelancer.proposals.index')
-                ->with('error', 'You can not submit a proposal to this project...!');
-        }
-
-        $user = Auth::guard('web')->user();
-        if ($user->proposedProjects()->find($project_id)) {
-            return redirect()
-                ->route('freelancer.proposals.index')
-                ->with('error', 'You have already submitted a proposal for this project before...!');
-        }
 
         return view('freelancer.proposals.create', [
             'project' => $project,
             'proposals' => new Proposal(),
-            'units' => [
-                'day' => 'Day',
-                'week' => 'Week',
-                'month' => 'Month',
-                'year' => 'Year'
-            ],
+            'units' => Proposal::units(),
         ]);
     }
 
@@ -94,8 +80,16 @@ class ProposalsController extends Controller
         // Notifications logic will be here.
         $project->client->notify(new NewProposalNotification($proposal, $user));
 
+        // Notify All Admins...
+        $admins = Admin::all();
+        Notification::send($admins, new NewProposalNotification($proposal, $user));
+
+        // On Demand Notifications...
+        Notification::route('mail', 'mohaamed.sabeer20@gmail.com')
+            ->notify(new NewProposalNotification($proposal, $user));
+
         return redirect()
-            ->back()
+            ->route('projects.show', $project->id)
             ->with('success', 'Proposal submitted successfully.');
     }
 
@@ -128,6 +122,16 @@ class ProposalsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = Auth::user();
+        try {
+            $user->proposals()->where('id', $id)->delete();
+            return redirect()
+                ->route('freelancer.proposals.index')
+                ->with('success', 'Proposal removed successfully.');
+        } catch (Exception $e) {
+            return redirect()
+                ->route('freelancer.proposals.index')
+                ->with('error', $e->getMessage());
+        }
     }
 }

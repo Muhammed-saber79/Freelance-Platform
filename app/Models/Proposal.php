@@ -31,4 +31,13 @@ class Proposal extends Model
         return $this->hasOne(Contract::class, 'proposal_id', 'id')
             ->withDefault();
     }
+
+    public static function units () {
+        return [
+            'day' => 'Day',
+            'week' => 'Week',
+            'month' => 'Month',
+            'year' => 'Year'
+        ];
+    }
 }

@@ -132,6 +132,11 @@
 
                     <!-- Right Side Content / End -->
                     <div class="right-side">
+
+                        @auth
+                            <x-notification-menu count="5" />
+                        @endauth
+
                         <!-- User Menu -->
                         <div class="header-widget">
 
@@ -139,7 +144,7 @@
                             <div class="header-notifications user-menu">
                                 <div class="header-notifications-trigger">
                                     <a href="#">
-                                        <div class="user-avatar status-online"><img src="{{ asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div>
+                                        <div class="user-avatar status-online"><img src="{{  Auth::user() ?  Auth::user()->profile_photo_url : asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div>
                                     </a>
                                 </div>
 
@@ -152,7 +157,7 @@
 
                                         <!-- User Name / Avatar -->
                                         <div class="user-details">
-                                            <div class="user-avatar status-online"><img src="{{ asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div>
+                                            <div class="user-avatar status-online"><img src="{{  Auth::user() ?  Auth::user()->profile_photo_url : asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div>
                                             <div class="user-name">
                                                 {{ Auth::user()->name }} <span>Freelancer</span>
                                             </div>

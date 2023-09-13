@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        $birthday = $user->freelancer->birthday->format('d-M/Y');
+//        $birthday = $user->freelancer->birthday->format('d-M/Y');
         $profile = $user->freelancer;
         return view('freelancer.profile.edit', compact('user', 'profile'));
     }

@@ -26,10 +26,10 @@
 	<!-- Header -->
 	<div id="header">
 		<div class="container">
-			
+
 			<!-- Left Side Content -->
 			<div class="left-side">
-				
+
 				<!-- Logo -->
 				<div id="logo">
 					<a href="index.html"><img src="images/logo.png" alt=""></a>
@@ -133,7 +133,7 @@
 				</nav>
 				<div class="clearfix"></div>
 				<!-- Main Navigation / End -->
-				
+
 			</div>
 			<!-- Left Side Content / End -->
 
@@ -141,7 +141,9 @@
 			<!-- Right Side Content / End -->
 			<div class="right-side">
 
-				<x-notification-menu count="5" />
+                @auth
+                    <x-notification-menu count="5" />
+                @endauth
 
 				<!-- User Menu -->
 				<div class="header-widget">
@@ -149,49 +151,44 @@
 					<!-- Messages -->
 					<div class="header-notifications user-menu">
 						<div class="header-notifications-trigger">
-							<a href="#"><div class="user-avatar status-online"><img src="{{ Auth::user()->profile_photo_url }}" alt=""></div></a>
+							<a href="#"><div class="user-avatar status-online"><img src="{{  Auth::user() ?  Auth::user()->profile_photo_url : asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div></a>
 						</div>
 
 						<!-- Dropdown -->
-						<div class="header-notifications-dropdown">
+                        @auth
+                            <div class="header-notifications-dropdown">
 
-							<!-- User Status -->
-							<div class="user-status">
+                                <!-- User Status -->
+                                <div class="user-status">
 
-								<!-- User Name / Avatar -->
-								<div class="user-details">
-									<div class="user-avatar status-online"><img src="{{ Auth::user()->profile_photo_url }}" alt=""></div>
-									<div class="user-name">
-										{{ Auth::user()->name }} <span>Freelancer</span>
-									</div>
-								</div>
-								
-								<!-- User Status Switcher -->
-								<div class="status-switch" id="snackbar-user-status">
-									<label class="user-online current-status">Online</label>
-									<label class="user-invisible">Invisible</label>
-									<!-- Status Indicator -->
-									<span class="status-indicator" aria-hidden="true"></span>
-								</div>	
-						</div>
-						
-						<ul class="user-menu-small-nav">
-							<li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
-							<li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
-							<li>
-								<a href="" onclick="event.preventDefault(); document.getElementById('logout').submit();">
-									<i class="icon-material-outline-power-settings-new"></i> Logout
-								</a>
-							</li>
-							
-							<div style="display: none;">
-								<form action="{{ route('logout') }}" method="POST" id='logout'>
-									@csrf
-								</form>
-							</div>
-						</ul>
+                                    <!-- User Name / Avatar -->
+                                    <div class="user-details">
+                                        <div class="user-avatar status-online"><img src="{{  Auth::user() ?  Auth::user()->profile_photo_url : asset('assets/front/images/user-avatar-small-01.jpg') }}" alt=""></div>
+                                        <div class="user-name">
+                                            {{ Auth::user()->name }} <span>Freelancer</span>
+                                        </div>
+                                    </div>
 
-						</div>
+                                    <!-- User Status Switcher -->
+                                    <div class="status-switch" id="snackbar-user-status">
+                                        <label class="user-online current-status">Online</label>
+                                        <label class="user-invisible">Invisible</label>
+                                        <!-- Status Indicator -->
+                                        <span class="status-indicator" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+
+                                <ul class="user-menu-small-nav">
+                                    <li><a href="{{ route('dashboard.index') }}"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
+                                    <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
+                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit();"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                                </ul>
+                                <form action="{{ route('logout') }}" method="post" style="display: none;" id="logout">
+                                    @csrf
+                                </form>
+
+                            </div>
+                        @endauth
 					</div>
 
 				</div>
@@ -236,7 +233,7 @@
 					</span>
 					<span class="trigger-title">Dashboard Navigation</span>
 				</a>
-				
+
 				<!-- Navigation -->
 				<div class="dashboard-nav">
 					<div class="dashboard-nav-inner">
@@ -247,14 +244,14 @@
 							<li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i> Bookmarks</a></li>
 							<li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>
 						</ul>
-						
+
 						<ul data-submenu-title="Organize and Manage">
 							<li><a href="#"><i class="icon-material-outline-business-center"></i> Jobs</a>
 								<ul>
 									<li><a href="{{ route('client.projects.index') }}">Manage Jobs <span class="nav-tag">3</span></a></li>
 									<li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>
 									<li><a href="{{ route('client.projects.create') }}">Post a Job</a></li>
-								</ul>	
+								</ul>
 							</li>
 							<li><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>
 								<ul>
@@ -262,7 +259,7 @@
 									<li><a href="dashboard-manage-bidders.html">Manage Bidders</a></li>
 									<li><a href="dashboard-my-active-bids.html">My Active Bids <span class="nav-tag">4</span></a></li>
 									<li><a href="dashboard-post-a-task.html">Post a Task</a></li>
-								</ul>	
+								</ul>
 							</li>
 						</ul>
 
@@ -270,7 +267,7 @@
 							<li class="active"><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
 							<li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
 						</ul>
-						
+
 					</div>
 				</div>
 				<!-- Navigation / End -->
@@ -285,7 +282,7 @@
 	================================================== -->
 	<div class="dashboard-content-container" data-simplebar>
 		<div class="dashboard-content-inner" >
-			
+
 			<!-- Dashboard Headline -->
 			<div class="dashboard-headline">
 				<h3>Settings</h3>
@@ -299,7 +296,7 @@
 					</ul>
 				</nav>
 			</div>
-	
+
 			{{ $slot }}
 
 			<!-- Footer -->
@@ -368,7 +365,7 @@
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>
 // Snackbar for user status switcher
-$('#snackbar-user-status label').click(function() { 
+$('#snackbar-user-status label').click(function() {
 	Snackbar.show({
 		text: 'Your status has been changed!',
 		pos: 'bottom-center',
@@ -377,8 +374,8 @@ $('#snackbar-user-status label').click(function() {
 		duration: 3000,
 		textColor: '#fff',
 		backgroundColor: '#383838'
-	}); 
-}); 
+	});
+});
 </script>
 
 <!-- Chart.js // documentation: http://www.chartjs.org/docs/latest/ -->
@@ -434,7 +431,7 @@ $('#snackbar-user-status label').click(function() {
 	            	},
 				}],
 				xAxes: [{
-					scaleLabel: { display: false },  
+					scaleLabel: { display: false },
 					gridLines:  { display: false },
 				}],
 			},
@@ -470,7 +467,7 @@ $('#snackbar-user-status label').click(function() {
 		 var autocomplete = new google.maps.places.Autocomplete(input, options);
 
 		if ($('.submit-field')[0]) {
-		    setTimeout(function(){ 
+		    setTimeout(function(){
 		        $(".pac-container").prependTo("#autocomplete-container");
 		    }, 300);
 		}
