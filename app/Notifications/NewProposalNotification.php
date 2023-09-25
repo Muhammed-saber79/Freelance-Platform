@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Proposal;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -30,7 +31,7 @@ class NewProposalNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        $via = ['database', 'mail'];
+        $via = ['database', 'mail', 'broadcast'];
         if (!$notifiable instanceof AnonymousNotifiable) {
             if ($notifiable->notify_mail) {
                 $via [] = 'mail';
@@ -61,11 +62,11 @@ class NewProposalNotification extends Notification
                 ->line($body)
                 ->action('View To Proposal', route('projects.show', $this->proposal->project_id))
                 ->line('Thank you for using our application!');
-//                ->view('mail.proposal', [
-//                    'proposal' => $this->proposal,
-//                    'notifiable' => $notifiable,
-//                    'freelancer' => $this->freelancer,
-//                ]);
+                /*->view('mail.proposal', [
+                    'proposal' => $this->proposal,
+                    'notifiable' => $notifiable,
+                    'freelancer' => $this->freelancer,
+                ]);*/
 
         return $message;
     }
@@ -87,6 +88,24 @@ class NewProposalNotification extends Notification
             'icon' => 'icon-material-outline-group',
             'url' => route('projects.show', $this->proposal->project_id)
         ];
+    }
+
+    /**
+     * Get the broadcast representation of the notification.
+     */
+    public function toBroadcast (object $notifiable) {
+        $body = sprintf(
+            '<span style="color: green; font-weight: bold">%s</span> applied for a job <span style="color: orange; font-weight: bold">%s</span>',
+            $this->freelancer->name,
+            $this->proposal->project->title,
+        );
+
+        return new BroadcastMessage([
+            'title' => 'New Proposal',
+            'body' => $body,
+            'icon' => 'icon-material-outline-group',
+            'url' => route('projects.show', $this->proposal->project_id)
+        ]);
     }
 
     /**

@@ -81,12 +81,12 @@ class ProposalsController extends Controller
         $project->client->notify(new NewProposalNotification($proposal, $user));
 
         // Notify All Admins...
-        $admins = Admin::all();
-        Notification::send($admins, new NewProposalNotification($proposal, $user));
+        /*$admins = Admin::all();
+        Notification::send($admins, new NewProposalNotification($proposal, $user));*/
 
         // On Demand Notifications...
-        Notification::route('mail', 'mohaamed.sabeer20@gmail.com')
-            ->notify(new NewProposalNotification($proposal, $user));
+        /*Notification::route('mail', 'mohaamed.sabeer20@gmail.com')
+            ->notify(new NewProposalNotification($proposal, $user));*/
 
         return redirect()
             ->route('projects.show', $project->id)

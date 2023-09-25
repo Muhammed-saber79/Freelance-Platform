@@ -12,6 +12,7 @@
 ================================================== -->
 <link rel="stylesheet" href="{{ asset('assets/front/css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/front/css/colors/blue.css') }}">
+@vite(['resources/js/app.js'])
 
 </head>
 <body class="gray">
@@ -360,7 +361,7 @@
 <script>
 	const userId = "{{ Auth::id() }}";
 </script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('build/assetsjs/app-e60292e6.js') }}"></script>
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>
@@ -476,7 +477,6 @@ $('#snackbar-user-status label').click(function() {
 
 <!-- Google API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initAutocomplete"></script>
-
 
 </body>
 </html>

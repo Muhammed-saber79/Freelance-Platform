@@ -10,6 +10,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('assets/front/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/front/css/colors/blue.css') }}">
+    @vite(['resources/js/app.js'])
 
 </head>
 
@@ -390,7 +391,7 @@
     <script>
         const userId = "{{ Auth::id() }}";
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('build/assetsjs/app-e60292e6.js') }}"></script>
     <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
     <script>
         // Snackbar for user status switcher
