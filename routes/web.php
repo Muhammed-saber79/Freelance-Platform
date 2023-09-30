@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectsController;
+use App\Models\Message;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\ProjectsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects.index');
 Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
+
+/**
+ * Messages...
+ */
+Route::get('messages', [MessagesController::class, 'create'])->name('messages');
+Route::post('messages', [MessagesController::class, 'store']);
 
 require __DIR__.'/dashboard.php';
 require __DIR__.'/freelancer.php';

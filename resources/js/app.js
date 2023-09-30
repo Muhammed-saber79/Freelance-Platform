@@ -31,21 +31,34 @@ window.Echo.private(`App.Models.User.${userId}`)
 
         // notificationsList.appendChild(notificationsItem);
 
-        let count = $('#newNotifications').text();
+        let count = Number($('#newNotifications').text());
         count++;
         $('#newNotifications').text(count);
 
-        $('#notificationsList').append(
+        $('#notificationsList').prepend(
             `<li class="notifications-not-read" style = "background-color: #C6FAF9">
-                <a href="${data.url}">
+                <a href="${data.url}?notify_id=${data.id}">
                     <span class="notification-icon">
                         <i class="icon-material-outline-group"></i>
                     </span>
                     <span class="notification-text">
                         <strong>*</strong>
-                        '${data.body}'
+                        ${data.body}
                     </span>
                 </a>
             </li >`
+        )
+    })
+
+window.Echo.join(`messages.${userId}`)
+    .listen('.message.created', function (data) {
+        $('#messagesList').append(
+            `<div class="message-bubble me">
+                <div class="message-bubble-inner">
+                    <div class="message-avatar"><img src="${data.user_image}" alt="" /></div>
+                    <div class="message-text"><p>${data.message.message}</p></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>`
         )
     })
