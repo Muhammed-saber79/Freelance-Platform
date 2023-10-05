@@ -4,6 +4,7 @@ use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProjectsController;
 
 /*
@@ -19,7 +20,7 @@ use App\Http\Controllers\ProjectsController;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -46,8 +47,20 @@ Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('pr
 /**
  * Messages...
  */
-Route::get('messages', [MessagesController::class, 'create'])->name('messages');
-Route::post('messages', [MessagesController::class, 'store']);
+Route::group([
+    'middleware' => ['auth']
+], function () {
+    Route::get('messages', [MessagesController::class, 'create'])->name('messages');
+    Route::post('messages', [MessagesController::class, 'store']);
+});
+
+/**
+ * OTP...
+ */
+Route::get('otp/request', [OtpController::class, 'create'])->name('otp.create');
+Route::post('otp/request', [OtpController::class, 'store']);
+Route::get('otp/verify', [OtpController::class, 'verifyForm'])->name('otp.verify');
+Route::post('otp/verify', [OtpController::class, 'verify']);
 
 require __DIR__.'/dashboard.php';
 require __DIR__.'/freelancer.php';

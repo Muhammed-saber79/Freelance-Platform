@@ -30,5 +30,13 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'nexmo' => [
+        'key' => env('VONAGE_KEY'),
+        'secret' => env('VONAGE_SECRET')
+    ],
+    'nepras' => [
+        'user' => env('NEPRAS_USER'),
+        'pass' => env('NEPRAS_PASS'),
+        'sender' => env('NEPRAS_SENDER'),
+    ]
 ];

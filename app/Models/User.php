@@ -136,4 +136,24 @@ class User extends Authenticatable
     public function setEmailAttribute ($value) {
         $this->attributes['email'] = Str::lower($value);
     }
+
+    public function routeNotificationForVonage($notification = null)
+    {
+        return $this->mobile_number;
+    }
+
+    public function routeNotificationForNepras($notification = null)
+    {
+        return $this->mobile_number;
+    }
+
+    /**
+     * This is used to change the notification channel name that users use to receive notifications.
+     */
+    /*
+    public function receiveBroadcastNotificationsOn()
+    {
+        return 'Notifications.' . $this->id;
+    }
+    */
 }

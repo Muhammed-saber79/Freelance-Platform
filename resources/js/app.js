@@ -53,7 +53,7 @@ window.Echo.private(`App.Models.User.${userId}`)
 window.Echo.join(`messages.${userId}`)
     .listen('.message.created', function (data) {
         $('#messagesList').append(
-            `<div class="message-bubble me">
+            `<div class="message-bubble">
                 <div class="message-bubble-inner">
                     <div class="message-avatar"><img src="${data.user_image}" alt="" /></div>
                     <div class="message-text"><p>${data.message.message}</p></div>

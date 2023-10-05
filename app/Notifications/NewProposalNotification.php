@@ -3,13 +3,16 @@
 namespace App\Notifications;
 
 use App\Models\User;
+use App\Channels\Log;
+use App\Channels\Nepras;
 use App\Models\Proposal;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\VonageMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class NewProposalNotification extends Notification
 {
@@ -31,7 +34,10 @@ class NewProposalNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        $via = ['database', 'mail', 'broadcast'];
+        // $via = ['database', 'mail', 'broadcast', 'vonage'];
+        // $via = [Log::class];
+        $via = [Nepras::class];
+
         if (!$notifiable instanceof AnonymousNotifiable) {
             if ($notifiable->notify_mail) {
                 $via [] = 'mail';
@@ -106,6 +112,41 @@ class NewProposalNotification extends Notification
             'icon' => 'icon-material-outline-group',
             'url' => route('projects.show', $this->proposal->project_id)
         ]);
+    }
+
+    /**
+     * Get the nexmo representation of the notification.
+     */
+    public function toVonage (object $notifiable) {
+        $body = sprintf(
+            '<span style="color: green; font-weight: bold">%s</span> applied for a job <span style="color: orange; font-weight: bold">%s</span>',
+            $this->freelancer->name,
+            $this->proposal->project->title,
+        );
+
+        return (new VonageMessage)
+            ->content($body);
+    }
+
+    public function toLog (object $notifiable) {
+        $body = sprintf(
+            '<span style="color: green; font-weight: bold">%s</span> applied for a job <span style="color: orange; font-weight: bold">%s</span>',
+            $this->freelancer->name,
+            $this->proposal->project->title,
+        );
+
+        return $body;
+    }
+
+    public function toNepras (object $notifiable)
+    {
+        $body = sprintf(
+            '<span style="color: green; font-weight: bold">%s</span> applied for a job <span style="color: orange; font-weight: bold">%s</span>',
+            $this->freelancer->name,
+            $this->proposal->project->title,
+        );
+
+        return $body;
     }
 
     /**
