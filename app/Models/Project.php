@@ -28,6 +28,14 @@ class Project extends Model
         'attachments' => 'json',
     ];
     
+    protected $hidden = [
+        'updated_at'
+    ];
+
+    protected $appends = [
+        'type_name'
+    ];
+
     /**
      * This is one to many relationship belongsTo user model.
      */
@@ -113,5 +121,10 @@ class Project extends Model
         }
 
         $this->tags()->sync($tags_id);
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return ucfirst($this->type);
     }
 }
