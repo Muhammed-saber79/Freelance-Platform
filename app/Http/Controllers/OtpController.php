@@ -55,7 +55,6 @@ class OtpController extends Controller
         return redirect()->route('home');
     }
 
-
     protected function getClient ()
     {
         $basic  = new \Vonage\Client\Credentials\Basic(config('services.nexmo.key'), config('services.nexmo.secret'));

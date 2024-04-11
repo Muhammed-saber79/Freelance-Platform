@@ -6,12 +6,18 @@ use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Client\ProjectRequest;
 use App\Http\Resources\ProjectResource;
 
 class ProjectsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum'])->except('index');
+    }
+
     public function index()
     {
         $projects = Project::latest()
@@ -21,13 +27,17 @@ class ProjectsController extends Controller
                 'tags:id,name'
             ])
             ->paginate(10);
-        return $projects;
+        return ProjectResource::collection($projects);
     }
 
     public function store(ProjectRequest $request)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (! $user->tokenCan('projects.create')) {
+            return ['message' => 'Project creation permission denied...!'];
+        }
         // $user = $request->user();
-        $user = User::find(1);
+        //$user = User::find(1);
 
         // $attachments = $this->uploadAttachments($request);
         // $data['attachments'] = $attachments;
@@ -68,8 +78,12 @@ class ProjectsController extends Controller
 
     public function destroy(Project $project)
     {
+        $user = Auth::guard('sanctum')->user();
+        if (! $user->tokenCan('projects.destroy')) {
+            return response()->json(['message' => 'Project delete permission denied...!'], 403);
+        }
         $project->delete();
-        
+
         if ($project->attachments) {
             foreach($project->attachments as $file) {
                 Storage::disk('public')->delete($file);

@@ -20,7 +20,17 @@ class ProjectResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'category_name' => $this->category->name,
+            // 'category_name' => $this->category->name,
+            // 'category' => [
+            //     'id' => $this->category->id,
+            //     'name' => $this->category->name,
+            //     '_links' => [
+            //         '_self' => url('api/categories/' . $this->category->id)
+            //     ]
+            // ],
+            '_links' => [
+                '_self' => url('api/projects/' . $this->id)
+            ]
         ];
     }
 }
