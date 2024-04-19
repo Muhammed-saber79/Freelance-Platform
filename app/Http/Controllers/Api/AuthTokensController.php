@@ -32,10 +32,10 @@ class AuthTokensController extends Controller
 
             // To create user token but with specific permissions
             $token = $user->createToken($request->device_name, ['projects.create', 'projects.update']);
-             return response()->json([
-                 'token' => $token->plainTextToken,
-                 'user' => $user
-             ], 201);
+            return response()->json([
+             'token' => $token->plainTextToken,
+             'user' => $user
+            ], 201);
         }
 
         return response()->json([
